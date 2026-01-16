@@ -14,19 +14,22 @@ public class AuthService : IAuthService
     private readonly IPasswordHasher _passwordHasher;
     private readonly ICacheService _cacheService;
     private readonly IConfiguration _configuration;
+    private readonly IEmailService _emailService;
 
     public AuthService(
         AuthDbContext context,
         IJwtService jwtService,
         IPasswordHasher passwordHasher,
         ICacheService cacheService,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        IEmailService emailService)
     {
         _context = context;
         _jwtService = jwtService;
         _passwordHasher = passwordHasher;
         _cacheService = cacheService;
         _configuration = configuration;
+        _emailService = emailService;
     }
 
     public async Task<AuthResponse> RegisterAsync(RegisterRequest request, string ipAddress)
@@ -181,6 +184,8 @@ public class AuthService : IAuthService
         user.PasswordResetTokenExpiry = DateTime.UtcNow.AddHours(1);
 
         await _context.SaveChangesAsync();
+
+        await _emailService.SendPasswordResetEmailAsync(user.Email, user.PasswordResetToken, user.Tenant.Domain);
 
         return true;
     }
