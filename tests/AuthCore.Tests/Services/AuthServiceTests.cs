@@ -17,6 +17,7 @@ public class AuthServiceTests : IDisposable
     private readonly Mock<IPasswordHasher> _passwordHasherMock;
     private readonly Mock<ICacheService> _cacheServiceMock;
     private readonly Mock<IConfiguration> _configurationMock;
+    private readonly Mock<IEmailService> _emailServiceMock;
     private readonly AuthService _authService;
 
     public AuthServiceTests()
@@ -30,6 +31,7 @@ public class AuthServiceTests : IDisposable
         _passwordHasherMock = new Mock<IPasswordHasher>();
         _cacheServiceMock = new Mock<ICacheService>();
         _configurationMock = new Mock<IConfiguration>();
+        _emailServiceMock = new Mock<IEmailService>();
 
         _configurationMock.Setup(c => c["Jwt:RefreshTokenExpirationDays"]).Returns("7");
 
@@ -38,7 +40,8 @@ public class AuthServiceTests : IDisposable
             _jwtServiceMock.Object,
             _passwordHasherMock.Object,
             _cacheServiceMock.Object,
-            _configurationMock.Object
+            _configurationMock.Object,
+            _emailServiceMock.Object
         );
 
         SeedDatabase();
