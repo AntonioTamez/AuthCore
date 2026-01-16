@@ -75,6 +75,11 @@ docker-compose up -d --build
 3. **Apply database migrations**
 ```bash
 docker-compose exec api dotnet ef database update --project src/AuthCore.Infrastructure
+
+dotnet ef migrations add InitialCreate --project src/AuthCore.Infrastructure --startup-project src/AuthCore.API
+
+dotnet ef database update --project src/AuthCore.Infrastructure --startup-project src/AuthCore.API
+
 ```
 
 4. **Access the API**
@@ -103,6 +108,11 @@ dotnet restore
 cd src/AuthCore.Infrastructure
 dotnet ef migrations add InitialCreate --startup-project ../AuthCore.API
 dotnet ef database update --startup-project ../AuthCore.API
+
+dotnet ef migrations add InitialCreate --project src/AuthCore.Infrastructure --startup-project src/AuthCore.API
+
+dotnet ef database update --project src/AuthCore.Infrastructure --startup-project src/AuthCore.API
+
 ```
 
 4. **Run the API**
