@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: authcore_db
+    environment:
+      POSTGRES_DB: authcore
+      POSTGRES_USER: authcore_user
+      POSTGRES_PASSWORD: your_secure_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - authcore_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U authcore_user -d authcore"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: authcore_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - authcore_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: authcore_api
+    ports:
+      - "5000:80"
+      - "5001:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=authcore;Username=authcore_user;Password=your_secure_password
+      - ConnectionStrings__Redis=redis:6379
+      - Jwt__Secret=YourSuperSecretKeyThatIsAtLeast32CharactersLongForHS256Algorithm
+      - Jwt__Issuer=AuthCore
+      - Jwt__Audience=AuthCore.Client
+      - Jwt__AccessTokenExpirationMinutes=15
+      - Jwt__RefreshTokenExpirationDays=7
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - authcore_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  authcore_network:
+    driver: bridge
