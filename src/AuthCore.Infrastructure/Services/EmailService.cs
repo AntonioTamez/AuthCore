@@ -20,7 +20,7 @@ public class EmailService : IEmailService
     public async Task SendPasswordResetEmailAsync(string email, string resetToken, string tenantDomain)
     {
         var baseUrl = _configuration["AppSettings:BaseUrl"] ?? "http://localhost:5000";
-        var resetLink = $"{baseUrl}/reset-password?token={Uri.EscapeDataString(resetToken)}&email={Uri.EscapeDataString(email)}&tenant={Uri.EscapeDataString(tenantDomain)}";
+        var resetLink = $"{baseUrl}/reset-password.html?token={Uri.EscapeDataString(resetToken)}&email={Uri.EscapeDataString(email)}&tenant={Uri.EscapeDataString(tenantDomain)}";
 
         var subject = "Password Reset Request - AuthCore";
         var body = $@"
