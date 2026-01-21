@@ -15,7 +15,7 @@ services:
     networks:
       - authcore_network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U authcore_user -d authcore"]
+      test: [ "CMD-SHELL", "pg_isready -U authcore_user -d authcore" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -30,7 +30,7 @@ services:
     networks:
       - authcore_network
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
       timeout: 3s
       retries: 5
@@ -48,11 +48,15 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - ConnectionStrings__DefaultConnection=Host=postgres;Database=authcore;Username=authcore_user;Password=your_secure_password
       - ConnectionStrings__Redis=redis:6379
-      - Jwt__Secret=YourSuperSecretKeyThatIsAtLeast32CharactersLongForHS256Algorithm
+      - Jwt__Secret=?????????????????????????????
       - Jwt__Issuer=AuthCore
       - Jwt__Audience=AuthCore.Client
       - Jwt__AccessTokenExpirationMinutes=15
       - Jwt__RefreshTokenExpirationDays=7
+      - Email__SmtpUser=?????????????????????????
+      - Email__SmtpPassword=?????????????????????
+      - Email__FromEmail=?????????????????????????
+      - AppSettings__BaseUrl=http://localhost:5000
     depends_on:
       postgres:
         condition: service_healthy
@@ -64,6 +68,7 @@ services:
 volumes:
   postgres_data:
   redis_data:
+
 
 networks:
   authcore_network:

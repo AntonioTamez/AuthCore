@@ -10,8 +10,23 @@ using System.Text;
 using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Authentication.Google;
 using AspNet.Security.OAuth.GitHub;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+// Solo usar Key Vault en producción (Azure App Service)
+// En desarrollo local con Docker, usar variables de entorno del docker-compose.yml
+if (builder.Environment.IsProduction())
+{
+    var keyVaultName = builder.Configuration.GetValue<string>("KeyVaultName")!;
+    var keyVaultUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
+
+    builder.Configuration.AddAzureKeyVault(keyVaultUri, new Azure.Identity.DefaultAzureCredential(),
+        new AzureKeyVaultConfigurationOptions { 
+            ReloadInterval = TimeSpan.FromDays(1)
+        });
+}
 
 builder.Services.AddDbContext<AuthDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));

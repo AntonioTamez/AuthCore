@@ -10,10 +10,12 @@ namespace AuthCore.API.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly IConfiguration _configuration;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, IConfiguration configuration)
     {
         _authService = authService;
+        _configuration = configuration;
     }
 
     [HttpPost("register")]
@@ -139,4 +141,18 @@ public class AuthController : ControllerBase
             permissions = permissions
         });
     }
+
+    [HttpGet("obtener-secreto")]
+    public string ObtenerSecreto()
+    {
+        var llaveApi = _configuration.GetValue<string>("LlaveAPI")!;
+
+        var SmtpUser = _configuration.GetValue<string>("Email:SmtpUser")!;
+        var SmtpPassword = _configuration.GetValue<string>("Email:SmtpPassword")!;
+        var FromEmail = _configuration.GetValue<string>("Email:FromEmail")!;
+        var jwtSecret = _configuration.GetValue<string>("Jwt:Secret")!;
+
+        return $"la llaveApi es {llaveApi}, el SmtpUser es {SmtpUser}, el SmtpPassword es {SmtpPassword} y el FromEmail es {FromEmail} y el secreto es {jwtSecret}";
+    }
+
 }
