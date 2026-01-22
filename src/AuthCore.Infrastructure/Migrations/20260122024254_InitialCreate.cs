@@ -169,12 +169,12 @@ namespace AuthCore.Infrastructure.Migrations
                 columns: new[] { "Id", "Action", "CreatedAt", "Description", "Name", "Resource" },
                 values: new object[,]
                 {
-                    { new Guid("57ce08a5-d2dd-4f36-91be-8f41a95da7ea"), "delete", new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3201), "Delete users", "users.delete", "users" },
-                    { new Guid("57fa6e2a-f497-47a5-8cd8-297e10cad900"), "manage", new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3206), "Manage roles", "roles.manage", "roles" },
-                    { new Guid("b4ce5c5f-2e75-4e9a-a3fd-13f36cdd6d72"), "read", new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3193), "Read users", "users.read", "users" },
-                    { new Guid("dacbb091-2d0a-4bcd-a6ce-25900879e2a5"), "read", new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3203), "Read roles", "roles.read", "roles" },
-                    { new Guid("e094a0ab-c435-4212-92fd-57e4066f15ba"), "update", new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3199), "Update users", "users.update", "users" },
-                    { new Guid("e3027956-f0e1-4d6a-b109-96e684fd2bbe"), "create", new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3196), "Create users", "users.create", "users" }
+                    { new Guid("1ea5e3f0-8b47-4d9e-b67c-f6e1d3b0655a"), "create", new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(302), "Create users", "users.create", "users" },
+                    { new Guid("8b5b22d0-7965-4cb7-8de8-25839b48af8f"), "manage", new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(334), "Manage roles", "roles.manage", "roles" },
+                    { new Guid("a7086e21-2c50-4858-b27a-8f7608a9ae5d"), "read", new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(298), "Read users", "users.read", "users" },
+                    { new Guid("ad347084-55bd-409a-b7ee-817aa692ac3d"), "read", new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(313), "Read roles", "roles.read", "roles" },
+                    { new Guid("e49e1543-e990-4c73-a071-54fe6f4c9a06"), "update", new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(306), "Update users", "users.update", "users" },
+                    { new Guid("e5224a68-4ad7-489d-a0b0-ae3886e602fe"), "delete", new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(310), "Delete users", "users.delete", "users" }
                 });
 
             migrationBuilder.InsertData(
@@ -182,8 +182,8 @@ namespace AuthCore.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "Name", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(2837), "Administrator with full access", "Admin", null },
-                    { new Guid("22222222-2222-2222-2222-222222222222"), new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(2840), "Standard user with basic access", "User", null }
+                    { new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 22, 2, 42, 51, 900, DateTimeKind.Utc).AddTicks(9811), "Administrator with full access", "Admin", null },
+                    { new Guid("22222222-2222-2222-2222-222222222222"), new DateTime(2026, 1, 22, 2, 42, 51, 900, DateTimeKind.Utc).AddTicks(9816), "Standard user with basic access", "User", null }
                 });
 
             migrationBuilder.InsertData(
@@ -191,13 +191,13 @@ namespace AuthCore.Infrastructure.Migrations
                 columns: new[] { "PermissionId", "RoleId", "AssignedAt" },
                 values: new object[,]
                 {
-                    { new Guid("57ce08a5-d2dd-4f36-91be-8f41a95da7ea"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3396) },
-                    { new Guid("57fa6e2a-f497-47a5-8cd8-297e10cad900"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3397) },
-                    { new Guid("b4ce5c5f-2e75-4e9a-a3fd-13f36cdd6d72"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3392) },
-                    { new Guid("dacbb091-2d0a-4bcd-a6ce-25900879e2a5"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3396) },
-                    { new Guid("e094a0ab-c435-4212-92fd-57e4066f15ba"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3395) },
-                    { new Guid("e3027956-f0e1-4d6a-b109-96e684fd2bbe"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3394) },
-                    { new Guid("b4ce5c5f-2e75-4e9a-a3fd-13f36cdd6d72"), new Guid("22222222-2222-2222-2222-222222222222"), new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3398) }
+                    { new Guid("1ea5e3f0-8b47-4d9e-b67c-f6e1d3b0655a"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(656) },
+                    { new Guid("8b5b22d0-7965-4cb7-8de8-25839b48af8f"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(661) },
+                    { new Guid("a7086e21-2c50-4858-b27a-8f7608a9ae5d"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(654) },
+                    { new Guid("ad347084-55bd-409a-b7ee-817aa692ac3d"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(660) },
+                    { new Guid("e49e1543-e990-4c73-a071-54fe6f4c9a06"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(657) },
+                    { new Guid("e5224a68-4ad7-489d-a0b0-ae3886e602fe"), new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(659) },
+                    { new Guid("a7086e21-2c50-4858-b27a-8f7608a9ae5d"), new Guid("22222222-2222-2222-2222-222222222222"), new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(664) }
                 });
 
             migrationBuilder.CreateIndex(

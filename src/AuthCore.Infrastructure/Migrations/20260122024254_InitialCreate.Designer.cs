@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AuthCore.Infrastructure.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20260116161551_InitialCreate")]
+    [Migration("20260122024254_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -64,54 +64,54 @@ namespace AuthCore.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b4ce5c5f-2e75-4e9a-a3fd-13f36cdd6d72"),
+                            Id = new Guid("a7086e21-2c50-4858-b27a-8f7608a9ae5d"),
                             Action = "read",
-                            CreatedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3193),
+                            CreatedAt = new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(298),
                             Description = "Read users",
                             Name = "users.read",
                             Resource = "users"
                         },
                         new
                         {
-                            Id = new Guid("e3027956-f0e1-4d6a-b109-96e684fd2bbe"),
+                            Id = new Guid("1ea5e3f0-8b47-4d9e-b67c-f6e1d3b0655a"),
                             Action = "create",
-                            CreatedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3196),
+                            CreatedAt = new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(302),
                             Description = "Create users",
                             Name = "users.create",
                             Resource = "users"
                         },
                         new
                         {
-                            Id = new Guid("e094a0ab-c435-4212-92fd-57e4066f15ba"),
+                            Id = new Guid("e49e1543-e990-4c73-a071-54fe6f4c9a06"),
                             Action = "update",
-                            CreatedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3199),
+                            CreatedAt = new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(306),
                             Description = "Update users",
                             Name = "users.update",
                             Resource = "users"
                         },
                         new
                         {
-                            Id = new Guid("57ce08a5-d2dd-4f36-91be-8f41a95da7ea"),
+                            Id = new Guid("e5224a68-4ad7-489d-a0b0-ae3886e602fe"),
                             Action = "delete",
-                            CreatedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3201),
+                            CreatedAt = new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(310),
                             Description = "Delete users",
                             Name = "users.delete",
                             Resource = "users"
                         },
                         new
                         {
-                            Id = new Guid("dacbb091-2d0a-4bcd-a6ce-25900879e2a5"),
+                            Id = new Guid("ad347084-55bd-409a-b7ee-817aa692ac3d"),
                             Action = "read",
-                            CreatedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3203),
+                            CreatedAt = new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(313),
                             Description = "Read roles",
                             Name = "roles.read",
                             Resource = "roles"
                         },
                         new
                         {
-                            Id = new Guid("57fa6e2a-f497-47a5-8cd8-297e10cad900"),
+                            Id = new Guid("8b5b22d0-7965-4cb7-8de8-25839b48af8f"),
                             Action = "manage",
-                            CreatedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3206),
+                            CreatedAt = new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(334),
                             Description = "Manage roles",
                             Name = "roles.manage",
                             Resource = "roles"
@@ -195,14 +195,14 @@ namespace AuthCore.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                            CreatedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(2837),
+                            CreatedAt = new DateTime(2026, 1, 22, 2, 42, 51, 900, DateTimeKind.Utc).AddTicks(9811),
                             Description = "Administrator with full access",
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("22222222-2222-2222-2222-222222222222"),
-                            CreatedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(2840),
+                            CreatedAt = new DateTime(2026, 1, 22, 2, 42, 51, 900, DateTimeKind.Utc).AddTicks(9816),
                             Description = "Standard user with basic access",
                             Name = "User"
                         });
@@ -229,44 +229,44 @@ namespace AuthCore.Infrastructure.Migrations
                         new
                         {
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            PermissionId = new Guid("b4ce5c5f-2e75-4e9a-a3fd-13f36cdd6d72"),
-                            AssignedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3392)
+                            PermissionId = new Guid("a7086e21-2c50-4858-b27a-8f7608a9ae5d"),
+                            AssignedAt = new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(654)
                         },
                         new
                         {
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            PermissionId = new Guid("e3027956-f0e1-4d6a-b109-96e684fd2bbe"),
-                            AssignedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3394)
+                            PermissionId = new Guid("1ea5e3f0-8b47-4d9e-b67c-f6e1d3b0655a"),
+                            AssignedAt = new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(656)
                         },
                         new
                         {
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            PermissionId = new Guid("e094a0ab-c435-4212-92fd-57e4066f15ba"),
-                            AssignedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3395)
+                            PermissionId = new Guid("e49e1543-e990-4c73-a071-54fe6f4c9a06"),
+                            AssignedAt = new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(657)
                         },
                         new
                         {
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            PermissionId = new Guid("57ce08a5-d2dd-4f36-91be-8f41a95da7ea"),
-                            AssignedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3396)
+                            PermissionId = new Guid("e5224a68-4ad7-489d-a0b0-ae3886e602fe"),
+                            AssignedAt = new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(659)
                         },
                         new
                         {
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            PermissionId = new Guid("dacbb091-2d0a-4bcd-a6ce-25900879e2a5"),
-                            AssignedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3396)
+                            PermissionId = new Guid("ad347084-55bd-409a-b7ee-817aa692ac3d"),
+                            AssignedAt = new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(660)
                         },
                         new
                         {
                             RoleId = new Guid("11111111-1111-1111-1111-111111111111"),
-                            PermissionId = new Guid("57fa6e2a-f497-47a5-8cd8-297e10cad900"),
-                            AssignedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3397)
+                            PermissionId = new Guid("8b5b22d0-7965-4cb7-8de8-25839b48af8f"),
+                            AssignedAt = new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(661)
                         },
                         new
                         {
                             RoleId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            PermissionId = new Guid("b4ce5c5f-2e75-4e9a-a3fd-13f36cdd6d72"),
-                            AssignedAt = new DateTime(2026, 1, 16, 16, 15, 50, 624, DateTimeKind.Utc).AddTicks(3398)
+                            PermissionId = new Guid("a7086e21-2c50-4858-b27a-8f7608a9ae5d"),
+                            AssignedAt = new DateTime(2026, 1, 22, 2, 42, 51, 901, DateTimeKind.Utc).AddTicks(664)
                         });
                 });
 
