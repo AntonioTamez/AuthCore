@@ -208,6 +208,102 @@ public class AuthService : IAuthService
         return true;
     }
 
+    public async Task<AuthResponse> OAuthLoginAsync(OAuthLoginRequest request, string ipAddress)
+    {
+        if (string.IsNullOrEmpty(request.Email))
+            throw new InvalidOperationException("Email is required for OAuth login");
+
+        // Buscar usuario existente
+        var user = await _context.Users
+            .Include(u => u.Tenant)
+            .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                    .ThenInclude(r => r.RolePermissions)
+                        .ThenInclude(rp => rp.Permission)
+            .FirstOrDefaultAsync(u => u.Email == request.Email);
+
+        // Si el usuario no existe, crearlo
+        if (user == null)
+        {
+            // Obtener o crear tenant
+            var tenant = await _context.Tenants.FirstOrDefaultAsync(t => t.Domain == request.TenantDomain);
+            
+            if (tenant == null)
+            {
+                tenant = new Tenant
+                {
+                    Id = Guid.NewGuid(),
+                    Name = request.TenantDomain,
+                    Domain = request.TenantDomain,
+                    IsActive = true,
+                    CreatedAt = DateTime.UtcNow
+                };
+                _context.Tenants.Add(tenant);
+            }
+
+            // Extraer nombre y apellido del nombre completo
+            var nameParts = request.Name?.Split(' ', 2, StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
+            var firstName = nameParts.Length > 0 ? nameParts[0] : "User";
+            var lastName = nameParts.Length > 1 ? nameParts[1] : "";
+
+            // Crear nuevo usuario
+            user = new User
+            {
+                Id = Guid.NewGuid(),
+                TenantId = tenant.Id,
+                Email = request.Email,
+                PasswordHash = string.Empty, // OAuth users no tienen password
+                FirstName = firstName,
+                LastName = lastName,
+                IsActive = true,
+                EmailConfirmed = true, // OAuth users tienen email confirmado automáticamente
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _context.Users.Add(user);
+
+            // Asignar rol de "User" por defecto
+            var userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "User");
+            if (userRole != null)
+            {
+                _context.UserRoles.Add(new UserRole
+                {
+                    UserId = user.Id,
+                    RoleId = userRole.Id,
+                    AssignedAt = DateTime.UtcNow
+                });
+            }
+
+            await _context.SaveChangesAsync();
+
+            // Recargar usuario con relaciones
+            user = await _context.Users
+                .Include(u => u.Tenant)
+                .Include(u => u.UserRoles)
+                    .ThenInclude(ur => ur.Role)
+                        .ThenInclude(r => r.RolePermissions)
+                            .ThenInclude(rp => rp.Permission)
+                .FirstOrDefaultAsync(u => u.Id == user.Id);
+        }
+        else
+        {
+            // Usuario existe, verificar que esté activo
+            if (!user.IsActive)
+                throw new InvalidOperationException("User account is inactive");
+
+            // Actualizar EmailConfirmed si no está confirmado
+            if (!user.EmailConfirmed)
+            {
+                user.EmailConfirmed = true;
+                user.UpdatedAt = DateTime.UtcNow;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        // Generar tokens y respuesta
+        return await GenerateAuthResponseAsync(user!, ipAddress);
+    }
+
     private async Task<AuthResponse> GenerateAuthResponseAsync(User user, string ipAddress)
     {
         var roles = user.UserRoles.Select(ur => ur.Role.Name).ToList();
