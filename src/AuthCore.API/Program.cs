@@ -2,6 +2,7 @@ using AuthCore.Core.Interfaces;
 using AuthCore.Infrastructure.Data;
 using AuthCore.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -47,6 +48,13 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+.AddCookie(options =>
+{
+    options.Cookie.Name = "AuthCore.OAuth";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+    options.SlidingExpiration = false;
 })
 .AddJwtBearer(options =>
 {
@@ -66,11 +74,13 @@ builder.Services.AddAuthentication(options =>
 {
     options.ClientId = builder.Configuration["OAuth:Google:ClientId"] ?? "";
     options.ClientSecret = builder.Configuration["OAuth:Google:ClientSecret"] ?? "";
+    options.SaveTokens = true;
 })
 .AddGitHub(options =>
 {
     options.ClientId = builder.Configuration["OAuth:GitHub:ClientId"] ?? "";
     options.ClientSecret = builder.Configuration["OAuth:GitHub:ClientSecret"] ?? "";
+    options.SaveTokens = true;
 });
 
 builder.Services.AddAuthorization();
