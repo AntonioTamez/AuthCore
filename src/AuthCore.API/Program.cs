@@ -44,7 +44,7 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<ICacheService, RedisCacheService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
-builder.Services.AddAuthentication(options =>
+var authBuilder = builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -69,19 +69,31 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true,
         ClockSkew = TimeSpan.Zero
     };
-})
-.AddGoogle(options =>
-{
-    options.ClientId = builder.Configuration["OAuth:Google:ClientId"] ?? "";
-    options.ClientSecret = builder.Configuration["OAuth:Google:ClientSecret"] ?? "";
-    options.SaveTokens = true;
-})
-.AddGitHub(options =>
-{
-    options.ClientId = builder.Configuration["OAuth:GitHub:ClientId"] ?? "";
-    options.ClientSecret = builder.Configuration["OAuth:GitHub:ClientSecret"] ?? "";
-    options.SaveTokens = true;
 });
+
+// Configurar Google OAuth solo si hay credenciales
+var googleClientId = builder.Configuration["OAuth:Google:ClientId"];
+if (!string.IsNullOrEmpty(googleClientId))
+{
+    authBuilder.AddGoogle(options =>
+    {
+        options.ClientId = googleClientId;
+        options.ClientSecret = builder.Configuration["OAuth:Google:ClientSecret"] ?? "";
+        options.SaveTokens = true;
+    });
+}
+
+// Configurar GitHub OAuth solo si hay credenciales
+var githubClientId = builder.Configuration["OAuth:GitHub:ClientId"];
+if (!string.IsNullOrEmpty(githubClientId))
+{
+    authBuilder.AddGitHub(options =>
+    {
+        options.ClientId = githubClientId;
+        options.ClientSecret = builder.Configuration["OAuth:GitHub:ClientSecret"] ?? "";
+        options.SaveTokens = true;
+    });
+}
 
 builder.Services.AddAuthorization();
 
